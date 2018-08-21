@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}PurchaseOrderScheduler{% endblock %}
+
+{%block nav%}
+    <li>
+        <a href="/">Upload POs</a>
+    </li>
+    <li>
+        <a href="/history">History</a>
+    </li>
+    <li class="active">
+        <a href="/upload_docks">Upload Docks</a>
+    </li>
+{%endblock%}
+
+{%block content%}
+    <div id="upload_container">
+        <h1>Dock Slots Upload</h1>
+
+        <div class="file_upload" style="vertical-align:top;">
+            <h2>Upload new File </h2>
+            <form action="/upload_docks" method=post enctype=multipart/form-data>
+                <p>
+                    <input type=file name=file style="height:30px;">
+                    <input type=submit value=Upload>
+                </p>
+            </form>
+            <ul>
+                <li>The CSV file should contain dock_id, slot_start_dt, slot_end_dt and capacity</li>
+            </ul>
+        </div>
+        <div class="text_upload" style="width:975px;">
+            {%if data%}
+            <div class='alert {%if data.status == 201 %} alert-warning {% elif data.status == 200 %}alert-success {%else%}alert-danger{%endif%}'
+                 role='alert' style="width:700px">{{data.message}}</div>
+            {%endif%}
+        </div>
+    </div>
+{%endblock%}

@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}PurchaseOrderScheduler{% endblock %}
+
+{%block nav%}
+    <li>
+        <a href="/">Upload POs</a>
+    </li>
+    <li class="active">
+        <a href="/history">History</a>
+    </li>
+    <li>
+        <a href="/upload_docks">Upload Docks</a>
+    </li>
+{%endblock%}
+
+{%block content%}
+   	<table width="100%">
+		<tr>
+            <td><h2><b>Search</b></h2></td>
+		    <td><p class="text-right"></p></td>
+		</tr>
+	</table>
+
+	<div class="form-group">
+		<pre>
+        	<form method=post action="/history">
+				<select name="slot_date" class="form-control">
+					<option value>Select a Date</option>
+					{% for d in dock_dates %}
+						<option value="{{ d }}" {% if selected_slot == d | string %}selected{% endif %}>{{ d }}</option>
+					{% endfor %}
+				</select>
+
+				<select name="dock_id" class="form-control">
+					<option selected value>Select a Dock ID</option>
+					{% for id in dock_ids %}
+						<option value="{{ id }}" {% if selected_dock == id | string %}selected{% endif %}>{{ id }}</option>
+					{% endfor %}
+				</select>
+				<button class="btn btn-large btn-success">Submit</button>
+        	</form>
+	    </pre>
+	</div>
+
+
+	<table class = "table table-striped">
+
+		<thead>
+			<tr>
+				<th>Slot Start</th>
+				<th>Slot End</th>
+				<th>Dock ID</th>
+				<th>Item ID</th>
+			</tr>
+		</thead>
+
+		<tbody class="table_data">
+			{% for i in results %}
+				<tr style="cursor: pointer;" class="details_row">
+					<td>{{i.slot_start_date}}</td>
+					<td>{{i.slot_end_date}}</td>
+					<td>{{i.dock_id}}</td>
+					<td>{{i.item_id}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+{%endblock%}
